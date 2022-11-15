@@ -1,0 +1,136 @@
+plugins {
+    id 'java'
+    id 'java-library'
+    id 'checkstyle'
+    id 'pmd'
+    id 'maven-publish'
+}
+
+// 定义要使用的版本号
+ext {
+
+    starterVersion = '1.0-SNAPSHOT'
+
+    springBootVersion = '2.5.5'
+
+    // tools
+    lombokVersion = '1.18.16'
+    guavaVersion = '30.0-jre'
+    fastjosnVersion = '1.2.74'
+    commonsCollectionsVersion = '4.4'
+    commonsLangVersion = '3.9'
+
+    // db
+    mysqlConnectorJavaVersion = '5.1.48'
+    mybatisStarterVersion = '2.1.3'
+
+    // xxlJob
+    xxlJobVersion = '2.3.0'
+
+    // test
+    jupiterVersion = '5.5.2'
+    assertjVersion = '3.17.2'
+}
+
+// 提供共同依赖包和统一版本
+allprojects {
+    repositories {
+        maven {
+            url 'https://maven.aliyun.com/repository/public'
+        }
+        maven {
+            credentials {
+                username '637323b8368f478310022780'
+                password 'YT9sD43O0wq='
+            }
+            url 'https://packages.aliyun.com/maven/repository/2301940-release-p62tRh/'
+        }
+        maven {
+            credentials {
+                username '637323b8368f478310022780'
+                password 'YT9sD43O0wq='
+            }
+            url 'https://packages.aliyun.com/maven/repository/2301940-snapshot-bYpdG1/'
+        }
+    }
+
+    configurations.all {
+        exclude group: 'org.apache.logging.log4j'
+        exclude group: 'log4j'
+        exclude group: "org.slf4j", module: "slf4j-log4j12"
+        exclude group: 'com.alibaba', module: 'druid'
+        exclude group: 'org.apache.tomcat.embed'
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+
+        // 强制依赖
+        resolutionStrategy {
+            force "mysql:mysql-connector-java:$mysqlConnectorJavaVersion"
+            force "org.assertj:assertj-core:$assertjVersion"
+        }
+    }
+
+    group 'con.sun'
+    version rootProject.ext.starterVersion
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'java-library'
+    apply plugin: 'checkstyle'
+    apply plugin: 'idea'
+
+
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+
+    dependencies {
+        api(platform("org.springframework.boot:spring-boot-dependencies:$springBootVersion"))
+
+        api "org.projectlombok:lombok:$lombokVersion",
+                "com.google.guava:guava:$guavaVersion",
+                "org.apache.commons:commons-collections4:$commonsCollectionsVersion",
+                "org.apache.commons:commons-lang3:$commonsLangVersion"
+
+        // 注解处理器
+        annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+        testAnnotationProcessor "org.projectlombok:lombok:$lombokVersion"
+    }
+
+    [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+
+    checkstyle {
+        ignoreFailures = false
+        configFile = rootProject.file('codequality/checkstyle.xml')
+    }
+
+    java {
+        withSourcesJar()
+    }
+
+}
+
+configure(subprojects.findAll {
+    it.name.contains('starter-')
+}) {
+    apply plugin: 'maven-publish'
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+            }
+        }
+
+        repositories {
+            maven {
+                url = project.version.contains("SNAPSHOT") ? "https://packages.aliyun.com/maven/repository/2301940-snapshot-bYpdG1/"
+                        : "https://packages.aliyun.com/maven/repository/2301940-release-p62tRh/"
+                credentials {
+                    username '637323b8368f478310022780'
+                    password 'YT9sD43O0wq='
+                }
+            }
+        }
+    }
+}

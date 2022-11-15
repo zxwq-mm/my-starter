@@ -1,0 +1,14 @@
+pluginManagement {
+    repositories {
+        maven {
+            url "http://maven.aliyun.com/nexus/content/groups/public/"
+        }
+    }
+}
+
+rootProject.name = 'my-gradle'
+include 'starter-common'
+include 'starter-test'
+include 'starter-web'
+include 'starter-job'
+

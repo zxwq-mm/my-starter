@@ -1,0 +1,11 @@
+dependencies {
+    api "com.xuxueli:xxl-job-core:$xxlJobVersion",
+            "org.springframework.boot:spring-boot-starter-web"
+
+    api("org.mybatis.spring.boot:mybatis-spring-boot-starter:$mybatisStarterVersion") {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-jdbc'
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter'
+    }
+
+    api project(':starter-common')
+}

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC
+        "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
+        "https://www.checkstyle.org/dtds/configuration_1_3.dtd">
+
+<module name="Checker">
+    <property name="severity" value="error"/>
+    <!--每个java文件当中都有一颗语法树-->
+    <module name="TreeWalker">
+        <module name="SuppressWarningsHolder" />
+        <property name="tabWidth" value="4"/>
+
+        <!--常量名的检查-->
+        <module name="ConstantName"/>
+        <!-- 局部的final变量，包括catch中的参数的检查 -->
+        <module name="LocalFinalVariableName"/>
+        <!-- 局部的非final型的变量，包括catch中的参数的检查 -->
+        <module name="LocalVariableName"/>
+        <!--变量的检查-->
+        <module name="MemberName"/>
+        <!--方法名的检查-->
+        <module name="MethodName">
+            <property name="format" value="^[a-z][a-zA-Z0-9_]*$"/>
+        </module>
+        <!--包名的检查-->
+        <module name="PackageName"/>
+        <!-- 仅仅是static型的变量（不包括static final型）的检查 -->
+        <module name="StaticVariableName"/>
+        <!-- Class或Interface名检查，默认^[A-Z][a-zA-Z0-9]*$-->
+        <module name="TypeName"/>
+        <!-- 避免使用* -->
+        <module name="AvoidStarImport"/>
+        <!-- 检查是否从非法的包中导入了类 -->
+        <module name="IllegalImport"/>
+        <!-- 检查是否导入了多余的包 -->
+        <module name="RedundantImport"/>
+        <!-- 没用的import检查，比如：1.没有被用到2.重复的3.import java.lang的4.import 与该类在同一个package的 -->
+        <module name="UnusedImports"/>
+        <!--每行不超过100个字-->
+        <!--<module name="LineLength">
+            <property name="max" value="100"/>
+        </module>-->
+        <!--每行不超过30行-->
+        <module name="MethodLength">
+            <property name="max" value="30"/>
+        </module>
+        <!-- Iterator -->
+        <module name="EmptyForIteratorPad"/>
+        <!-- 方法名后跟左圆括号"(" -->
+        <module name="MethodParamPad"/>
+        <!-- 检查在某个特定关键字之后应保留空格 -->
+        <module name="NoWhitespaceAfter">
+            <property name="tokens" value="BNOT,DEC,DOT,INC,LNOT,UNARY_MINUS,UNARY_PLUS"/>
+        </module>
+        <!-- 检查在某个特定关键字之前应保留空格 -->
+        <module name="NoWhitespaceBefore"/>
+        <!-- 操作符换行策略检查 -->
+        <module name="OperatorWrap"/>
+        <!-- 圆括号空白 -->
+        <module name="ParenPad"/>
+        <!-- 在类型转换时，不允许左圆括号右边有空格，也不允许与右圆括号左边有空格 -->
+        <module name="TypecastParenPad"/>
+        <!-- 检查分隔符是否在空白之后 -->
+        <module name="WhitespaceAfter"/>
+        <!-- 检查分隔符周围是否有空白 -->
+        <module name="WhitespaceAround"/>
+        <!-- 检查修饰符的顺序是否遵照java语言规范，默认public、protected、private、abstract、static、final、transient、volatile、synchronized、native、strictfp -->
+        <module name="ModifierOrder"/>
+        <!--多余的关键字-->
+        <module name="RedundantModifier"/>
+        <!--多余的括号-->
+        <module name="AvoidNestedBlocks"/>
+        <!--对区域的检查，不能出现空白-->
+        <module name="EmptyBlock"/>
+        <module name="LeftCurly"/>
+        <!--所有区域都要使用大括号-->
+        <module name="NeedBraces"/>
+        <!-- 检查右大括号位置 -->
+        <module name="RightCurly">
+            <property name="severity" value="ignore"/>
+            <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
+        </module>
+        <!--不允许出现空语句-->
+        <module name="EmptyStatement"/>
+        <!--每个类都实现了equals（）和hashcode（）-->
+        <module name="EqualsHashCode"/>
+        <!-- 检查局部变量或参数是否隐藏了类中的变量 -->
+        <module name="HiddenField">
+            <property name="severity" value="ignore"/>
+            <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
+        </module>
+        <!-- 检查是否使用工厂方法实例化 -->
+        <module name="IllegalInstantiation"/>
+        <!--不允许内部复制-->
+        <module name="InnerAssignment"/>
+        <!--不能容忍魔法数-->
+        <module name="MagicNumber"/>
+        <!-- 检查switch语句是否有default -->
+        <module name="MissingSwitchDefault"/>
+        <!-- 不许使用未被简化的条件表达式 -->
+        <module name="SimplifyBooleanExpression"/>
+        <!-- 不许使用未被简化的布尔返回值 -->
+        <module name="SimplifyBooleanReturn"/>
+        <!-- 检查类是否为扩展设计l -->
+        <module name="DesignForExtension">
+            <property name="severity" value="ignore"/>
+            <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
+        </module>
+        <!-- 检查工具类是否有putblic的构造器 -->
+        <module name="HideUtilityClassConstructor"/>
+        <!-- 检查接口是否仅定义类型 -->
+        <module name="InterfaceIsType"/>
+        <!-- 检查类成员的可见度 -->
+        <module name="VisibilityModifier"/>
+        <!--声明数组的风格的检查-->
+        <module name="ArrayTypeStyle"/>
+        <!-- 检查方法名、构造函数、catch块的参数是否是final的 -->
+        <module name="FinalParameters">
+            <property name="severity" value="ignore"/>
+            <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
+        </module>
+        <!--缩进的检查-->
+        <module name="Indentation">
+            <property name="basicOffset" value="4" />
+            <property name="braceAdjustment" value="0" />
+            <property name="caseIndent" value="4" />
+            <property name="throwsIndent" value="8" />
+            <property name="arrayInitIndent" value="4" />
+            <property name="lineWrappingIndentation" value="4" />
+        </module>
+
+        <!--确保常量中的L都是大写的-->
+        <module name="UpperEll"/>
+        <module name="FallThrough"/>
+        <!-- 方法不超过30行 -->
+        <module name="MethodLength">
+            <property name="max" value="30"/>
+        </module>
+    </module>
+    <!-- 检查文件中是否含有'\t' -->
+    <module name="FileTabCharacter">
+        <property name="eachLine" value="true"/>
+    </module>
+    <!--检查使用LINUX风格的换行符：-->
+    <module name="NewlineAtEndOfFile">
+        <property name="severity" value="ignore"/>
+        <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
+    </module>
+    <!-- 检查翻译文件 -->
+    <module name="Translation"/>
+    <!-- 长度方面的检查 -->
+    <module name="FileLength"/>
+    <module name="FileTabCharacter">
+        <property name="severity" value="ignore"/>
+        <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
+    </module>
+    <!--正则表达式单行匹配-->
+    <module name="RegexpSingleline">
+        <property name="severity" value="ignore"/>
+        <property name="format" value="\s+$"/>
+        <property name="message" value="Line has trailing spaces."/>
+        <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
+    </module>
+    <module name="SuppressWarningsFilter" />
+</module>
