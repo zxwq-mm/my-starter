@@ -29,4 +29,17 @@ public class BussinessException extends RuntimeException {
         this(errorCode, errorMessage, null);
     }
 
+    /**
+     * 构造函数
+     */
+    public BussinessException(ErrorInfo errorInfo) {
+        this(errorInfo.getCode(), errorInfo.getMessage(), null);
+    }
+
+    /**
+     * 构造函数
+     */
+    public BussinessException(ErrorCodeEnumOperation codeEnum, Object... message) {
+        this(codeEnum.getCode(), codeEnum.getMessage().contains("%s") ? codeEnum.outMessage(message) : codeEnum.getMessage());
+    }
 }
